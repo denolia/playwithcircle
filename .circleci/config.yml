@@ -8,7 +8,17 @@ orbs:
 defaults: &my_defaults
   docker:
     - image: circleci/node:13.8.0
-# Define the jobs we want to run for this project
+
+commands:
+  # Exercise - Rollback
+  destroy_environment:
+    steps:
+      - run:
+          name: Destroy environment
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
+
 jobs:
   build:  # Choose any name, such as `build`
     <<: *my_defaults
@@ -25,8 +35,9 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
               --region us-east-1
+
   # Exercise: Config and Deployment
   configure_infrastructure:
     docker:
@@ -63,15 +74,18 @@ jobs:
             # Test if website exists
             if curl -s --head ${URL} 
             then
-              return 0
+              return 1
             else
               return 1
             fi
+      - destroy_environment
 workflows:
   # Name the workflow
   myWorkflow:
     jobs:
 #      - build
-#      - create_infrastructure
+      - create_infrastructure
 #      - configure_infrastructure
-      - smoke_test
+      - smoke_test:
+          requires:
+            - create_infrastructure

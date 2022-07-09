@@ -15,7 +15,7 @@ Resources:
       InstanceType: t3.micro
       Tags:
         - Key: Project
-          Value: Udacity
+          Value: udacity-cf
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
