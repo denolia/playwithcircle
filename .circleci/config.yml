@@ -7,11 +7,29 @@ orbs:
     welcome: circleci/welcome-orb@0.4.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+defaults: &my_defaults
+  docker:
+    - image: circleci/node:13.8.0
+  working_directory: ~/project
+
+commands:
+  sayhello:
+    description: 'command'
+    parameters:
+      to:
+        type: string
+        default: "hello world"
+    steps:
+      - run:
+          name: "Print output"
+          command: echo << parameters.to >>
+
 jobs:
   save_hello_world_output:
-    docker:
-      - image: circleci/node:13.8.0
+    <<: *my_defaults
     steps:
+      - sayhello:
+          to: "Lev"
       - run:
           name: "Print output"
           command: echo "text to output here" > ~/output.txt
