@@ -3,7 +3,6 @@ Parameters:
   PipelineID:
     Description: Existing Bucket name
     Type: String
-    Default: "awesome-bckt"
 
 Resources:
   CloudFrontOriginAccessIdentity:
