@@ -30,7 +30,7 @@ jobs:
   # Exercise: Config and Deployment
   configure_infrastructure:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
@@ -40,10 +40,10 @@ jobs:
           name: Install Ansible
           command: |
             apt install ansible
-      - run:
-          name: Get IP
-          command: |
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> ./inventory
+#      - run:
+#          name: Get IP
+#          command: |
+#            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> ./inventory
 
       - run:
           name: Run Playbook and Configure server
