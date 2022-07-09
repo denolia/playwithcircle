@@ -33,7 +33,7 @@ jobs:
   failing_job:
     <<: *my_defaults
     steps:
-      - run: return 1
+      - run: exit 1
       - run:
           when: on_fail
           name: Panic
