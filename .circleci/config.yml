@@ -54,5 +54,5 @@ workflows:
   myWorkflow:
     jobs:
 #      - build
-      - create_infrastructure
-#      - configure_infrastructure
+#      - create_infrastructure
+      - configure_infrastructure
