@@ -13,6 +13,11 @@ defaults: &my_defaults
   working_directory: ~/project
 
 commands:
+  print_pipeline_id:
+    description: "prints the Circle CI Workflow ID"
+    steps:
+      - run: echo $CIRCLE_WORKFLOW_ID
+
   sayhello:
     description: 'command'
     parameters:
@@ -28,6 +33,7 @@ jobs:
   save_hello_world_output:
     <<: *my_defaults
     steps:
+      - print_pipeline_id
       - sayhello:
           to: "Lev"
       - run:
@@ -41,6 +47,7 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
+      - print_pipeline_id
       - attach_workspace:
           at: ~/
       - run:
