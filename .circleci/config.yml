@@ -39,7 +39,6 @@ jobs:
           name: Panic
           command: echo "Call 911"
 
-
   save_hello_world_output:
     <<: *my_defaults
     steps:
@@ -67,6 +66,7 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
+      - failing_job
       - save_hello_world_output
       - print_output_file:
           requires:
