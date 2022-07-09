@@ -30,6 +30,16 @@ commands:
           command: echo << parameters.to >>
 
 jobs:
+  failing_job:
+    <<: *my_defaults
+    steps:
+      - run: return 1
+      - run:
+          when: on_fail
+          name: Panic
+          command: echo "Call 911"
+
+
   save_hello_world_output:
     <<: *my_defaults
     steps:
