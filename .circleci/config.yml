@@ -41,6 +41,11 @@ jobs:
           command: |
             apk add --update ansible
       - run:
+          name: Get IP
+          command: |
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> ./inventory
+
+      - run:
           name: Run Playbook and Configure server
           command: |
             ansible-playbook main-remote.yml -i inventory
@@ -49,5 +54,5 @@ workflows:
   myWorkflow:
     jobs:
 #      - build
-#      - create_infrastructure
-      - configure_infrastructure
+      - create_infrastructure
+#      - configure_infrastructure
