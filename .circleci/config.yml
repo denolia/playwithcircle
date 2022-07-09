@@ -23,6 +23,13 @@ jobs:
       - run:
           name: "Print World"
           command: "echo world"
+  print_name:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - run:
+          name: "Print Name"
+          command: "echo $MY_NAME"
 
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
@@ -51,3 +58,6 @@ workflows:
           requires:
             - print_hello
       - say-hello
+      - print_name:
+          requires:
+            - say-hello
