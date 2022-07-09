@@ -10,24 +10,24 @@ orbs:
 jobs:
   save_hello_world_output:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:13.8.0
     steps:
       - run:
           name: "Print output"
-          command: echo "text to output here" > output.txt
+          command: echo "text to output here" > ~/output.txt
       - persist_to_workspace:
           root: ~/
           paths:
             - output.txt
   print_output_file:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:13.8.0
     steps:
       - attach_workspace:
           at: ~/
       - run:
           name: "Check output"
-          command: "cat output.txt"
+          command: "cat ~/output.txt"
 
 workflows:
   say-hello-workflow:
